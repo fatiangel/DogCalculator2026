@@ -2,41 +2,53 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>妙麗(柯基犬)歲數計算機</title>
+
     <link rel="stylesheet" href="style.css" />
-    <script link="preload" src="app.js"></script>
   </head>
 
   <body>
-    <h1>妙麗(柯基犬)歲數計算機</h1>
+    <div class="container">
+      <h1>妙麗(柯基犬)歲數計算機</h1>
 
-    <h3>公式來源說明:</h3>
-    <p>
-      Wang, T. et al. (2020). Quantitative Translation of Dog-to-Human Aging by
-      Conserved Remodeling of the DNA Methylome. Cell Systems.
-      DOI:10.1016/j.cels.2020.06.006
-    </p>
+      <h3>公式來源說明：</h3>
 
-    <p>使用公式：human_age = 16 × ln(dog_age) + 31</p>
+      <p class="source">
+        Wang, T., et al. (2020). Quantitative Translation of Dog-to-Human Aging
+        by Conserved Remodeling of the DNA Methylome. Cell Systems. DOI:
+        https://doi.org/10.1016/j.cels.2020.06.006
+      </p>
 
-    <hr />
+      <p class="formula">使用公式： human_age = 16 × ln(dog_age) + 31</p>
 
-    <label>輸入妙麗出生年月日:</label>
-    <input type="date" id="birthDate" value="2023-02-28" />
+      <hr />
 
-    <br /><br />
+      <label>輸入妙麗出生年月日：</label>
 
-    <button id="calcBtn">開始計算</button>
-    <button id="clearBtn">清除</button>
+      <input type="date" id="birthDate" value="2023-02-28" />
 
-    <hr />
+      <div class="btnArea">
+        <button id="calcBtn">開始計算</button>
 
-    <div id="result">
-      <p>狗的年齡是：-</p>
-      <p>換算人類的年齡是：-</p>
-      <p>公式簡述：使用 Cell Systems (2020) DNA methylation 年齡模型。</p>
+        <button id="clearBtn">清除</button>
+      </div>
+
+      <hr />
+
+      <div id="result">
+        <p>狗的年齡是：-</p>
+
+        <p>換算人類的年齡是：-</p>
+
+        <p class="note">
+          公式簡述：依據 Cell Systems 研究，利用 DNA methylation aging clock
+          建立人狗年齡對應。
+        </p>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
