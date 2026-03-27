@@ -57,4 +57,33 @@ font-size:16px;
 color:#333;
 line-height:1.6;
 min-height:1.6em;
+padding:14px 16px;
+border-radius:8px;
+background:#f7f7f7;
+border:1px solid #e2e2e2;
+text-align:left;
+transition:all 0.2s ease;
+}
+
+.result strong{
+display:inline-block;
+margin-bottom:6px;
+}
+
+.result-success{
+color:#1f5130;
+background:#edf8f0;
+border-color:#b7e1c0;
+}
+
+.result-error{
+color:#8a1f1f;
+background:#fff1f1;
+border-color:#f0b9b9;
+}
+
+.result-info{
+color:#24507a;
+background:#eef6ff;
+border-color:#bfd8f4;
 }

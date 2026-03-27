@@ -4,27 +4,32 @@ const birthInput = document.getElementById("birthDatey");
 const result = document.getElementById("result");
 const calcBtn = document.getElementById("calcBtn");
 const clearBtn = document.getElementById("clearBtn");
+const todayString = new Date().toISOString().split("T")[0];
 
-/* 初始化 localStorage */
+birthInput.max = todayString;
 
-const savedDate = localStorage.getItem("birthDatey");
-
-if (savedDate) {
-birthInput.value = savedDate;
+function showMessage(message, type) {
+result.className = "result result-" + type;
+result.innerHTML = message;
 }
 
-/* 計算年齡 */
+function resetMessage() {
+result.className = "result";
+result.innerHTML = "";
+}
 
-calcBtn.addEventListener("click", function () {
-
+function calculateDogAge() {
 const birthDate = birthInput.value;
 
 if (!birthDate) {
-alert("請輸入出生日期");
+showMessage("請先輸入妙麗的出生日期。", "error");
 return;
 }
 
-/* 存入 localStorage */
+if (birthDate > todayString) {
+showMessage("出生日期不能選未來日期，請重新選擇。", "error");
+return;
+}
 
 localStorage.setItem("birthDatey", birthDate);
 
@@ -33,24 +38,38 @@ const today = new Date();
 
 /* 狗實際年齡 */
 const diff = today - birth;
-const dogAge = diff / (1000 * 60 * 60 * 24 * 365.25); // 使用 365.25 考慮閏年更精確
-/* ⚡ 關鍵檢查：如果狗狗還不到 1 歲或日期不正確 */
+const dogAge = diff / (1000 * 60 * 60 * 24 * 365.25);
+
 if (dogAge <= 0) {
-    result.innerHTML = "日期輸入有誤，請選擇過去的日期！";
-    return;
+showMessage("日期輸入有誤，請選擇今天以前的日期。", "error");
+return;
 }
 
 /* 人類年齡公式 */
-// 注意：當 dogAge 很小時，log 可能會產出負值，通常此公式適用於 1 歲以上的狗狗
 const humanAge = 16 * Math.log(dogAge) + 31;
 
-/* 顯示結果 */
-result.innerHTML =
+showMessage(
+"<strong>計算完成</strong><br>" +
 "狗的年齡是 " + dogAge.toFixed(2) + " 歲 <br>" +
 "換算人類的年齡是 " + humanAge.toFixed(2) + " 歲 <br><br>" +
-"公式: HumanAge = 16 × ln(DogAge) + 31";
+"公式: HumanAge = 16 × ln(DogAge) + 31",
+"success"
+);
+}
 
-});
+/* 初始化 localStorage */
+
+const savedDate = localStorage.getItem("birthDatey");
+
+if (savedDate) {
+birthInput.value = savedDate;
+showMessage("已載入上次儲存的出生日期，並自動完成計算。", "info");
+calculateDogAge();
+}
+
+/* 計算年齡 */
+
+calcBtn.addEventListener("click", calculateDogAge);
 
 /* 清除按鈕功能 */
 clearBtn.addEventListener("click", function () {
@@ -59,9 +78,10 @@ clearBtn.addEventListener("click", function () {
 
     // 2. 將輸入框重設為空白 (或預設值)
     birthInput.value = "";
+    birthInput.max = todayString;
 
     // 3. 清空結果顯示區域
-    result.innerHTML = "";
+    resetMessage();
     
     // 4. (選配) 可以加一個 console.log 方便 Debug
     console.log("資料已成功清除");
